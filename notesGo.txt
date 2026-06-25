@@ -73,7 +73,7 @@ server {
 Nginx lo carichi gia direttamente sul server se hai e.g. 20apps(docker-compose) sullo stesso server.
 //SOLO Ngnix è pubblico! quindi NO esposizione porte FastApi al web! tutto resta interno Docker network. 
 //in production di solito si usa server proprio, oppure VPS(macchina virtuale su internet, quelle che compri su Hetzner) / Cloud server (Linux)
-1.-copia il prj sul server  e.g. git clone <https:\\repo>   //al posto di git si potrebbe anche usare SCP (info)
+1.-copia il prj sul server  e.g. git clone <https:\\repo>   //quando fai push puoi caricare code su github o 🔥GitLab(self-hosted dell'azienda) .al posto di git si potrebbe anche usare SCP (ma è davvero poco usato xk non ha cronologia e rollercback queste cose temporarali)
 2.-entra nel server tramite ssh  e.g. ssh user@server e poi cd /app/project
 3.-crea file .env e.g.'nano .env'
 4.-avvia il tutto con docker e.g.'docker compose up -d --build' //-d è detach cioe in background, --build rebuild images
@@ -93,6 +93,9 @@ Server
 docker compose up --build
    ↓
 Prj online
+modifichi il code -> push su github o gitlab -> ssh e vai nel server nel root prj -> scrichi le modifiche 'git pull' -> aggiorni i containers 'docker compose up -d --build' (docker ricostruisce le imgs che sono cambiate, riavvi i containers necessari, ovviamente mantiene i volumi xk sono esterni per sempre sul server).
+//ovviamente con GitHub Actions puoi atuomatizzare auto che quando fai 'git push'->deploy automatico su server.
+
 
 OTHERS:
 -runna i tests: 'pytest -v' (anche con docker spento), pytest tests/integration/test_health.py (visto che lo hai settato in un certo modo, funziona anche con fastapi spento). e poi ovviamente devi fare i tests degli endpoint with e.g. postman
