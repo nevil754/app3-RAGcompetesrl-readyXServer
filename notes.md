@@ -278,7 +278,6 @@ Come funziona il flusso SSE end-to-end usando ChainLit x il frontend
   Login: email + password + (opzionale) email|tenant-slug
 
 SYSTEM DOCKER-COMPOSE
-//x celery remember each servizio worker è un container che esegue più task in parallelo
 
 [fastapi container]
 [redis container]
@@ -300,6 +299,10 @@ SYSTEM DOCKER-COMPOSE
 [flower container]
 
 [chainlit container]
+
+//x celery remember each servizio worker è un container che esegue più task in parallelo
+//sistema facilemente scalabile (ovviamente per i containers Stateless sono facilmente scalabili, quelli Statefule e.g.qdrant è meglio usare cloud!)
+//puoi fare e.g.'docker compose up --scale celery-worker-high=3' e ottenere 3 containers x celery-worker-high il quale ognuno ha 4 concurrency -> ottieni cosi in totale 12 processi totali!  
   
   ############################################
 

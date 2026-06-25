@@ -35,7 +35,7 @@ services:    #here servizi da avviare
       retries: 3     #dopo 3 tentativi falliti, container è unhealthy
       start_period: 20s   #attende 20sec prima di iniziare il check
 
-
+  #CELERY x coda HIGH, deve essere veloce e prioritatrio, x chat realtime retireval RAG embedding veloce richieste utente
   celery-worker-high:    #worker Celery per coda "high" (task PRIORITARI)
     build:
       context: .
@@ -75,7 +75,7 @@ services:    #here servizi da avviare
       retries: 3
       start_period: 30s
 
-  #CELERY x coda DEFAULT (ingestion bulk)
+  #CELERY x coda DEFAULT, più lenta e meno prioritaria ma stabile, x task di background pesanti e non urgenti, ingestion pdf batch embedding cleanup task pesanti
   celery-worker-default:    #Worker per task PESANTI/NON URGENTI
     build:
       context: .

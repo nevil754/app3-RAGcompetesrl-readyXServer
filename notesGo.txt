@@ -27,7 +27,7 @@ pip install -r requirements-dev.txt
 
 //attualmente nel mio env creato  avevo markitdown==0.0.1a2 ora invece ho tolto '--pre' dal comando per generare il file .txt e l'ho cambiato in -> markitdown>=0.0.1, e ho rigenerato il file requirements.txt. CMQN SAPERE CHE ATTUALMENTE NEL MIO ENV HO ANCORA LA VERSIONE markitdown==0.0.1a2 (e le sue dipendenze transitive). mentre il file .txt è correttamente aggiornato.
 
-########DOCKER & RUN CONTAINERS ALL APPLICATIONS
+################DOCKER & RUN CONTAINERS ALL APPLICATIONS
 
 docker-compose -f docker-compose.yml up -d    //questo lo lanci in production (quindi il docker-compose.override.yml non viene caricato)
 docker-compose up    //questo ok lo lanci in develop (no -d cosi vedi i logs), e visto che non specifici il file allora anche il file docker-compose.override.yml viene caricato!!
@@ -68,13 +68,37 @@ server {
     }
 }
 
+//SEMPRE meglio fare prima un 'docker compose up --build' locale sulla tua macchina, prima di andare sul server, se non funziona sul tuo pc allora aggiusta prima di passare al server!
+//Docker Desktop è pensato x dev test debugging su pc, SU SERVER PRODUCTION (non usi GUI interface) USI SOLO Docker Engine, Docker Compose, systemd, Nginx(CHE SI METTE DAVANTI A FastApi ) / Traefik,
+//in production di solito si usa server proprio, oppure VPS / Cloud server (Linux)
+1.-copia il prj sul server  e.g. git clone <https:\\repo>   //al posto di git si potrebbe anche usare SCP (info)
+2.-entra nel server tramite ssh  e.g. ssh user@server e poi cd /app/project
+3.-crea file .env e.g.'nano .env'
+4.-avvia il tutto con docker e.g.'docker compose up -d --build' //-d è detach cioe in background, --build rebuild images
+5.-una volta tutto avviato e pronto, testa i servizi accendendoci e.g.ChainLit -> http://SERVER_IP:8080
+8000 FastAPI
+8080 Chainlit
+5555 Flower
+6379 Redis
+1433 SQL Server
+6333 Qdrant
+6.-sul server per il firewall fai se che apra le tue porte che esponi solo se è necessario!
+7.-update quando vuoi (x aggiornamenti) sul server con e.g.'docker compose pull' 'docker compose up -d' 
+PC (sviluppo)
+   ↓ git push
+Server
+   ↓ git pull
+docker compose up --build
+   ↓
+Prj online
+
+OTHERS:
 -runna i tests: 'pytest -v' (anche con docker spento), pytest tests/integration/test_health.py (visto che lo hai settato in un certo modo, funziona anche con fastapi spento). e poi ovviamente devi fare i tests degli endpoint with e.g. postman
 -checks container attivi:  'docker compose ps'
-- main.py SEMPRE IN ROOT PRJ (quindi fuori da /app) !!: se fosse dentro /app allora python aggiungerebbe un dir corrente al sys.path quindi tutti gli import dovrebbero essere e.g. 'from app.core.settings import' e dovresti aggiungere anche app/ al pythonpath esplicitamente nel dockerfile.
-
+-⚡️ main.py SEMPRE IN ROOT PRJ (quindi fuori da /app) !!: se fosse dentro /app allora python aggiungerebbe un dir corrente al sys.path quindi tutti gli import dovrebbero essere e.g. 'from app.core.settings import' e dovresti aggiungere anche app/ al pythonpath esplicitamente nel dockerfile.
 - trovi img fastapi python ufficiali in https://hub.docker.com/ filtrando x 'Docker Official Image'.
 
-########DB
+################DB
 tabella audit: cronologia IMMUTABILE di tutto quello che succede nel sistema (chi ha fatto cosa, quando lo ha fatto, con che dati, da dove, ect)
 fondamentale in contesti enterprise🔥
 e.g. record di audit
