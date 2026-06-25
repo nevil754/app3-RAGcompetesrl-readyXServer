@@ -101,7 +101,7 @@ SET SERVER PRO
 -oggi si fa di solito 
 Internet
    ↓
-80 / 443  //🔥porte allowed da Firewall cloud del provider (e.g.hetzner), 80 x HTTP  443 x HTTPS, numeri definiti dall'IANA quindi che si aspettano tutti. Questa è la prima barriera del firewall. Sul server setti anche la seconda barriera cioe installi ufw or iptables.
+80 / 443 / 22  //🔥porte allowed da Firewall cloud del provider (e.g.hetzner), 80 x HTTP  443 x HTTPS  22 x SSH remote connection, numeri definiti dall'IANA quindi che si aspettano tutti. questa è la 🔥PRIMA BARRIERA del firewall, STA ANCORA PRIMA DEL TUO SERVER (se blocchi una porta il server non sa nemmeno che esiste). Sul server setti anche la SECONDA BARRIERA cioe traffico gia arrivato al server, installi ufw  (better than iptables che è piu potente ma raw a deep livello linux server)
    ↓
 🔥Nginx
    ↓
@@ -115,6 +115,7 @@ nginx:
 tutto il resto resta disponibile solo internamente alla rete docker del docker-compose!
 
 -set server x internet from 0: 
+install Ubuntu Server 24.04 LTS (su server hetzner è gia installato)
 apt update && apt upgrade -y   //aggiorna il system
 //crea utente non root, consigliato poi disabilitare root login (sempre attacked by hackers)
 adduser deploy
