@@ -101,9 +101,9 @@ SET SERVER PRO
 -oggi si fa di solito 
 Internet
    ↓
-80 / 443  //allowed da Firewall cloud del provider (e.g.hetzner)
+80 / 443  //🔥porte allowed da Firewall cloud del provider (e.g.hetzner), 80 x HTTP  443 x HTTPS, numeri definiti dall'IANA quindi che si aspettano tutti. Questa è la prima barriera del firewall. Sul server setti anche la seconda barriera cioe installi ufw or iptables.
    ↓
-Nginx
+🔥Nginx
    ↓
 FastAPI
 //se vuoi accedere al tuo db e.g.container sqlserver che sta girando (x magari fare delle query x check) allora allow questi ip targets sul firewall.
@@ -112,7 +112,7 @@ nginx:
   ports:
     - "80:80"
     - "443:443"
-tutto il resto resta disponibile solo internamente alla rete docker del docker-compose.
+tutto il resto resta disponibile solo internamente alla rete docker del docker-compose!
 
 OTHERS:
 -runna i tests: 'pytest -v' (anche con docker spento), pytest tests/integration/test_health.py (visto che lo hai settato in un certo modo, funziona anche con fastapi spento). e poi ovviamente devi fare i tests degli endpoint with e.g. postman
