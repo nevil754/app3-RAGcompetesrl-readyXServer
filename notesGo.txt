@@ -69,7 +69,8 @@ server {
 }
 
 //SEMPRE meglio fare prima un 'docker compose up --build' locale sulla tua macchina, prima di andare sul server, se non funziona sul tuo pc allora aggiusta prima di passare al server!
-//Docker Desktop è pensato x dev test debugging su pc, SU SERVER PRODUCTION (non usi GUI interface) USI SOLO Docker Engine, Docker Compose, systemd, Nginx(CHE SI METTE DAVANTI A FastApi ) / Traefik,
+//Docker Desktop è pensato x dev test debugging su pc, SU SERVER PRODUCTION (non usi GUI interface) USI SOLO Docker Engine, Docker Compose, systemd, Nginx(CHE SI METTE DAVANTI A FastApi) / Traefik.
+//SOLO Ngnix è pubblico! quindi NO esposizione porte FastApi al web! tutto resta interno Docker network.
 //in production di solito si usa server proprio, oppure VPS / Cloud server (Linux)
 1.-copia il prj sul server  e.g. git clone <https:\\repo>   //al posto di git si potrebbe anche usare SCP (info)
 2.-entra nel server tramite ssh  e.g. ssh user@server e poi cd /app/project
