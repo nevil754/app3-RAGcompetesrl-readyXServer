@@ -114,6 +114,30 @@ nginx:
     - "443:443"
 tutto il resto resta disponibile solo internamente alla rete docker del docker-compose!
 
+-set server x internet from 0: 
+apt update && apt upgrade -y   //aggiorna il system
+//crea utente non root, consigliato poi disabilitare root login (sempre attacked by hackers)
+adduser deploy
+usermod -aG sudo deploy
+//set firewall (is PRIMA PROTEZIONE)
+apt install ufw -y
+//apri solo cio che ti serve, blocca il resto, e attivalo
+ufw allow 22     # SSH
+ufw allow 80     # HTTP
+ufw allow 443    # HTTPS
+ufw default deny incoming
+ufw default allow outgoing
+ufw enable
+//installa Docker Engine e Docker Compose
+curl -fsSL https://get.docker.com | sh
+usermod -aG docker deploy   //aggiunge utente docker
+apt install docker-compose-plugin -y
+docker --version
+docker compose version
+//🔥 install Nginx sul server
+apt install nginx
+...e ti manca solo link dominio-https-tuo docker-compose sul server.  //forse consigliato apt install certbot python3-certbot-nginx, certbot --nginx, see more in file KingStone2/DEVELOPER/DOCKER/hetzner1.txt come avevi fatto.
+
 OTHERS:
 -runna i tests: 'pytest -v' (anche con docker spento), pytest tests/integration/test_health.py (visto che lo hai settato in un certo modo, funziona anche con fastapi spento). e poi ovviamente devi fare i tests degli endpoint with e.g. postman
 -checks container attivi:  'docker compose ps'
