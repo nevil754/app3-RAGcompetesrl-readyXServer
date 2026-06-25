@@ -97,11 +97,15 @@ modifichi il code -> push su github o gitlab -> ssh e vai nel server nel root pr
 //ovviamente con GitHub Actions puoi atuomatizzare auto che quando fai 'git push'->deploy automatico su server.
 
 
+-quando compri VPS(e.g.Hetzner 4$/month) ti da anche subito IP pubblico (e.g. 95.123.45.67), se nel docker-compose fai x redis e.g."6379:6379" fa pubblica la porta del container target sulla scheda di rete del server, allora ora sul web chiunque puo fare 95.123.45.67:6379 ed raggiungere direttamente il tuo redis! ovviamente se per caso non specifichi 'ports' x redis nel docker-compose, all'interno della rete docker cmnq redis è chiamabile (anche xk hanno naming dei containers x riconoscersi tra di loro), ma dall'esterno e.g.SERVER_IP:6379 non funziona. ovviamente anche se non hai Nginx cmnq e.g.95.123.45.67:6379 funziona e chiunque puo accedere al tuo redis.
+
+
+
 OTHERS:
 -runna i tests: 'pytest -v' (anche con docker spento), pytest tests/integration/test_health.py (visto che lo hai settato in un certo modo, funziona anche con fastapi spento). e poi ovviamente devi fare i tests degli endpoint with e.g. postman
 -checks container attivi:  'docker compose ps'
--⚡️ main.py SEMPRE IN ROOT PRJ (quindi fuori da /app) !!: se fosse dentro /app allora python aggiungerebbe un dir corrente al sys.path quindi tutti gli import dovrebbero essere e.g. 'from app.core.settings import' e dovresti aggiungere anche app/ al pythonpath esplicitamente nel dockerfile.
-- trovi img fastapi python ufficiali in https://hub.docker.com/ filtrando x 'Docker Official Image'.
+-⚡️main.py SEMPRE IN ROOT PRJ (quindi fuori da /app) !!: se fosse dentro /app allora python aggiungerebbe un dir corrente al sys.path quindi tutti gli import dovrebbero essere e.g. 'from app.core.settings import' e dovresti aggiungere anche app/ al pythonpath esplicitamente nel dockerfile.
+-trovi img fastapi python ufficiali in https://hub.docker.com/ filtrando x 'Docker Official Image'.
 
 ################DB
 tabella audit: cronologia IMMUTABILE di tutto quello che succede nel sistema (chi ha fatto cosa, quando lo ha fatto, con che dati, da dove, ect)

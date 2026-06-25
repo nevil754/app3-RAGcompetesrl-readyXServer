@@ -165,7 +165,7 @@ services:    #here servizi da avviare
       retries: 3
       start_period: 15s   #attende 15sec prima di iniziare il check
 
-
+  #QDRANT
   qdrant:
     image: qdrant/qdrant:v1.4.2     #immagine ufficiale Qdrant
     container_name: qdrant
