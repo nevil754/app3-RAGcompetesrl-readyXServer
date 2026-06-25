@@ -27,7 +27,7 @@ pip install -r requirements-dev.txt
 
 //attualmente nel mio env creato  avevo markitdown==0.0.1a2 ora invece ho tolto '--pre' dal comando per generare il file .txt e l'ho cambiato in -> markitdown>=0.0.1, e ho rigenerato il file requirements.txt. CMQN SAPERE CHE ATTUALMENTE NEL MIO ENV HO ANCORA LA VERSIONE markitdown==0.0.1a2 (e le sue dipendenze transitive). mentre il file .txt è correttamente aggiornato.
 
-################DOCKER & RUN CONTAINERS ALL APPLICATIONS
+########################DOCKER & RUN CONTAINERS ALL APPLICATIONS
 
 docker-compose -f docker-compose.yml up -d    //questo lo lanci in production (quindi il docker-compose.override.yml non viene caricato)
 docker-compose up    //questo ok lo lanci in develop (no -d cosi vedi i logs), e visto che non specifici il file allora anche il file docker-compose.override.yml viene caricato!!
@@ -96,7 +96,7 @@ Prj online
 modifichi il code -> push su github o gitlab -> ssh e vai nel server nel root prj -> scrichi le modifiche 'git pull' -> aggiorni i containers 'docker compose up -d --build' (docker ricostruisce le imgs che sono cambiate, riavvi i containers necessari, ovviamente mantiene i volumi xk sono esterni per sempre sul server).
 //ovviamente con GitHub Actions puoi atuomatizzare auto che quando fai 'git push'->deploy automatico su server.
 
-
+SET SERVER PRO
 -quando compri VPS(e.g.Hetzner 4$/month) ti da anche subito IP pubblico (e.g. 95.123.45.67), se nel docker-compose fai x redis e.g."6379:6379" fa pubblica la porta del container target sulla scheda di rete del server, allora ora sul web chiunque puo fare 95.123.45.67:6379 ed raggiungere direttamente il tuo redis! ovviamente se per caso non specifichi 'ports' x redis nel docker-compose, all'interno della rete docker cmnq redis è chiamabile (anche xk hanno naming dei containers x riconoscersi tra di loro), ma dall'esterno e.g.SERVER_IP:6379 non funziona. ovviamente anche se non hai Nginx cmnq e.g.95.123.45.67:6379 funziona e chiunque puo accedere al tuo redis.
 -oggi si fa di solito 
 Internet
@@ -120,7 +120,8 @@ OTHERS:
 -⚡️main.py SEMPRE IN ROOT PRJ (quindi fuori da /app) !!: se fosse dentro /app allora python aggiungerebbe un dir corrente al sys.path quindi tutti gli import dovrebbero essere e.g. 'from app.core.settings import' e dovresti aggiungere anche app/ al pythonpath esplicitamente nel dockerfile.
 -trovi img fastapi python ufficiali in https://hub.docker.com/ filtrando x 'Docker Official Image'.
 
-################DB
+########################DB
+
 tabella audit: cronologia IMMUTABILE di tutto quello che succede nel sistema (chi ha fatto cosa, quando lo ha fatto, con che dati, da dove, ect)
 fondamentale in contesti enterprise🔥
 e.g. record di audit
